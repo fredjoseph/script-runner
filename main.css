@@ -1,0 +1,138 @@
+body {
+    width: 600px;
+    height: 500px;
+    border: 1px solid;
+    margin: auto;
+    background: #606563;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    width: 10%;
+    margin: 5px;
+    border-radius: 4px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-small {
+    height: 22px;
+}
+
+.btn:active {
+    background: #ffffdd;
+}
+.save {
+    margin-right: 0;
+    background: #91C95A;
+}
+.close {
+    margin-left: 0;
+    background: #E14949;
+}
+.run {
+    width: -webkit-fill-available;
+    background: #55B5E5;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.new{
+    width: 15%;
+}
+
+.CodeMirror {
+    width: 600px;
+    height: 410px;
+    font-size: 14px;
+}
+
+.input {
+    width: 80%;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 4px;
+}
+
+#run {
+    height: 40px;
+}
+
+.img {
+    width: 18px;
+}
+
+.img--run{
+    width: 33px;
+    margin: 0px 0px 0px 10px;
+}
+
+.slider{
+    display: flex;
+    overflow: hidden;
+}
+
+.slide{
+    width: 600px;
+    height: 500px;
+}
+
+.slide--editor {
+    margin-left: -600px;
+    transition: 300ms ease-in-out;
+}
+.slide--list{
+    display: inline-table;
+}
+.active-slide {
+    margin-left: 0!important;
+}
+
+.script-list{
+    padding: 0 5px;
+}
+.script {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 0 10px;
+    background: white;
+}
+
+.script--title{
+    width: 365px;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.script-actions{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+.exec, .open, .delete {
+    width: 33%;
+}
+
+.exec:hover {
+    background: #F3A02B;
+}
+
+.open:hover {
+    background: #91C95A;
+}
+
+.delete:hover {
+    background: #E14949;
+}

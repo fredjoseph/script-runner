@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="lib/codemirror/css/codemirror.css">
+        <link rel="stylesheet" href="lib/codemirror/css/lint.css">
+        <link rel="stylesheet" href="lib/codemirror/css/base16-dark.css">
+        <link rel="stylesheet" href="main.css">
+
+        <script src="lib/codemirror/js/mirror.js"></script>
+        <script src="lib/codemirror/js/jshint.js"></script>
+        <script src="lib/codemirror/js/lint.js"></script>
+        <script src="lib/codemirror/js/javascript.js"></script>
+        <script src="lib/codemirror/js/javascript-lint.js"></script>
+        <script src="utils.js"></script>
+    </head>
+    <body style="width: 600px; height: 500px">
+
+    <div class="slider">
+
+        <div class="slide slide--editor">
+
+            <div class="header">
+                <button id="save" class="btn save">
+                    <img class="img img--save" src="assets/save.svg" alt="Save">
+                </button>
+
+                <input class="input" type="text" id="name">
+                <button id="close" class="btn close">
+                    <img class="img img--close" src="assets/close.svg" alt="Close">
+                </button>
+            </div>
+
+            <textarea id="code"></textarea>
+
+            <button id="run" class="btn run">
+                Run <img class="img img--run" src="assets/run.svg" alt="Run">
+            </button>
+        </div>
+
+        <div class="slide slide--list">
+            <div class="header">
+                <input class="input" type="text" id="search">
+                <button id="newScript" class="btn new">
+                    <img class="img img--close" src="assets/editor.svg" alt="Close">
+                </button>
+            </div>
+            <ul id="script-list" class="script-list" type="none">
+            </ul>
+        </div>
+    </div>
+
+    <script src="scriptRunner.js"></script>
+    <script src="popup.js"></script>
+    </body>
+</html>
