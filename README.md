@@ -1,5 +1,5 @@
 # JSR - Javascript runner
-![screenshot](icon.png)
+![screenshot](web-extension/icon.png)
 ## About
 ![version](https://img.shields.io/badge/version-0.0.1-blue)
 
@@ -8,7 +8,7 @@ Simple Google Chrome extension to write and store javascript code which can be i
 ## Installation
 1. Clone this repo 
 ```
-git clone https://github.com/caulfield33/script-runner.git
+git clone https://github.com/fredjoseph/script-runner.git
 ```
 2. Open  **Customize and control Google Chrome** in top right corner of Google Chrome.
 3. Go to **More tools** -> **Extension**.
