@@ -158,7 +158,7 @@ class ScriptRunner {
         if (!!this.selectedScriptId) {
             const script = this.findScript(this.selectedScriptId)
             const index = this.scripts.findIndex(s => s.id === script.id)
-            script.update(code, title)
+            script.update(code, title, options)
             this.scripts.splice(index, 1, script)
         } else {
             this.scripts.splice(0, 0, new Script({ code, title, options, id: new Date().toISOString() }))
