@@ -1,6 +1,6 @@
 body {
     width: 600px;
-    height: 500px;
+    height: 530px;
     border: 1px solid;
     margin: auto;
     background: #606563;
@@ -10,6 +10,15 @@ body {
 .header {
     display: flex;
     justify-content: space-between;
+}
+
+.header--jquery {
+    display: flex;
+    align-items: start;
+    justify-content: end;
+    background-color: #55B5E5;
+    border-radius: 4px;
+    margin: 5px;
 }
 
 .btn {
@@ -81,7 +90,7 @@ body {
 
 .slide{
     width: 600px;
-    height: 500px;
+    height: 530px;
 }
 
 .slide--editor {

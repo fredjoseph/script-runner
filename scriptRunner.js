@@ -3,11 +3,13 @@ class Script {
         this.code = props.code;
         this.title = props.title;
         this.id = props.id;
+        this.options = props.options;
     }
 
-    update(code, title) {
+    update(code, title, options) {
         this.code = code;
         this.title = title;
+        this.options = options;
     }
 
     get html() {
@@ -48,34 +50,40 @@ class ScriptRunner {
 
     listen() {
         this.buttons.editor.addEventListener('click', async () => {
-           await this.openEmptyEditor()
+            await this.openEmptyEditor()
         })
 
         this.buttons.close.addEventListener('click', async () => {
             await this.closeEditor()
         })
 
-        this.buttons.save.addEventListener('click',async () => {
-          await this.saveScript(this.editor.getValue(), this.inputs.name.value);
+        this.buttons.save.addEventListener('click', async () => {
+            await this.saveScript(this.editor.getValue(), this.inputs.name.value, this.getCurrentScriptOptions());
         })
 
         this.buttons.run.addEventListener('click', () => {
-            this.executeCode(this.editor.getValue());
+            this.executeCode(this.editor.getValue(), this.getCurrentScriptOptions());
         })
 
         this.inputs.name.addEventListener('keyup', debounce(async () => {
-           await this.updateState();
+            await this.updateState();
         }, 500))
 
         this.editor.on('change', debounce(async () => {
             await this.updateState();
         }, 500))
 
-        this.inputs.search.addEventListener('keyup', () => {
+        this.inputs.search.addEventListener('keyup', e => {
             const val = inputs.search.value;
             let temp = [...this.scripts];
-            if (val) temp = temp.filter(script => script.title.includes(val))
-            this.render(temp)
+            if (val) {
+                temp = temp.filter(script => val.split(' ').every(part =>
+                    script.title.toLowerCase().includes(part.toLowerCase())))
+            }
+            this.render(temp);
+            if (e.key === 'Enter' && temp.length) {
+                this.executeCode(temp[0].code, temp[0].options);
+            }
         })
     }
 
@@ -91,6 +99,9 @@ class ScriptRunner {
                             this.editorSlide.classList.add("active-slide")
                             this.inputs.name.value = result.state.editorData.title;
                             this.editor.getDoc().setValue(result.state.editorData.code)
+                            this.restoreCurrentScriptOptions(result.state.editorData.options)
+                        } else {
+                            this.inputs.search.focus();
                         }
                         resolve(true)
                     }
@@ -99,18 +110,17 @@ class ScriptRunner {
         } catch (e) {
             console.error(e)
         }
-
     }
 
     async updateState() {
         try {
-            console.log(this.editorSlide.classList.contains("active-slide"))
             return new Promise(((resolve) => this.storage.set({
                 state: {
                     isList: !this.editorSlide.classList.contains("active-slide"),
                     editorData: {
                         code: this.editor.getValue(),
                         title: this.inputs.name.value,
+                        options: this.getCurrentScriptOptions(),
                     },
                     selectedScriptId: this.selectedScriptId
                 },
@@ -126,6 +136,7 @@ class ScriptRunner {
     async openEmptyEditor() {
         this.inputs.name.value = '';
         this.editor.getDoc().setValue('')
+        this.restoreCurrentScriptOptions({ requiresJQuery: false })
         this.editorSlide.classList.add("active-slide")
         await this.updateState()
     }
@@ -136,18 +147,21 @@ class ScriptRunner {
         await this.updateState()
     }
 
-    executeCode(code) {
-        chrome.tabs.executeScript({code});
+    async executeCode(code, options) {
+        if (options.requiresJQuery) {
+            await getObjectFromLocalStorage("JQuery").then(code => chrome.tabs.executeScript({ code }))
+        }
+        chrome.tabs.executeScript({ code });
     }
 
-    async saveScript(code, title) {
+    async saveScript(code, title, options) {
         if (!!this.selectedScriptId) {
             const script = this.findScript(this.selectedScriptId)
             const index = this.scripts.findIndex(s => s.id === script.id)
             script.update(code, title)
             this.scripts.splice(index, 1, script)
         } else {
-            this.scripts.splice(0, 0, new Script({code, title, id: new Date().toISOString()}))
+            this.scripts.splice(0, 0, new Script({ code, title, options, id: new Date().toISOString() }))
         }
         this.render()
         await this.closeEditor();
@@ -158,7 +172,7 @@ class ScriptRunner {
             const index = this.scripts.findIndex(s => s.id === id)
             this.scripts.splice(index, 1)
             await new Promise(((resolve) => {
-                this.storage.set({scripts: this.scripts}, () => {
+                this.storage.set({ scripts: this.scripts }, () => {
                     resolve(true)
                 });
             }));
@@ -173,16 +187,26 @@ class ScriptRunner {
     async editScript(id) {
         const script = this.findScript(id)
         this.editor.getDoc().setValue(script.code)
-        inputs.name.value = script.title;
+        this.inputs.name.value = script.title;
+        this.restoreCurrentScriptOptions(script.options);
         this.editorSlide.classList.add("active-slide")
         this.selectedScriptId = id;
         await this.updateState()
     }
 
     runScript(id) {
-        chrome.tabs.executeScript({
-            code: this.findScript(id).code
-        });
+        const script = this.findScript(id);
+        this.executeCode(script.code, script.options)
+    }
+
+    getCurrentScriptOptions() {
+        return {
+            requiresJQuery: this.inputs.requiresJQuery.checked,
+        }
+    }
+
+    restoreCurrentScriptOptions(options) {
+        this.inputs.requiresJQuery.checked = options.requiresJQuery;
     }
 
     findScript(id) {

@@ -2,17 +2,17 @@
     <head>
         <link rel="stylesheet" href="lib/codemirror/css/codemirror.css">
         <link rel="stylesheet" href="lib/codemirror/css/lint.css">
-        <link rel="stylesheet" href="lib/codemirror/css/base16-dark.css">
+        <link rel="stylesheet" href="lib/codemirror/css/darcula.css">
         <link rel="stylesheet" href="main.css">
 
-        <script src="lib/codemirror/js/mirror.js"></script>
+        <script src="lib/codemirror/js/codemirror.js"></script>
         <script src="lib/codemirror/js/jshint.js"></script>
         <script src="lib/codemirror/js/lint.js"></script>
         <script src="lib/codemirror/js/javascript.js"></script>
         <script src="lib/codemirror/js/javascript-lint.js"></script>
         <script src="utils.js"></script>
     </head>
-    <body style="width: 600px; height: 500px">
+    <body>
 
     <div class="slider">
 
@@ -27,6 +27,10 @@
                 <button id="close" class="btn close">
                     <img class="img img--close" src="assets/close.svg" alt="Close">
                 </button>
+            </div>
+            <div class="header--jquery">
+                <label for="requiresJQuery">Add jQuery</label>
+                <input type="checkbox" id="requiresJQuery" name="requiresJQuery" checked="">  
             </div>
 
             <textarea id="code"></textarea>
