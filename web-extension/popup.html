@@ -1,23 +1,22 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="lib/codemirror/css/codemirror.css">
-        <link rel="stylesheet" href="lib/codemirror/css/lint.css">
-        <link rel="stylesheet" href="lib/codemirror/css/darcula.css">
-        <link rel="stylesheet" href="main.css">
+<html style="overflow: hidden">
 
-        <script src="lib/codemirror/js/codemirror.js"></script>
-        <script src="lib/codemirror/js/jshint.js"></script>
-        <script src="lib/codemirror/js/lint.js"></script>
-        <script src="lib/codemirror/js/javascript.js"></script>
-        <script src="lib/codemirror/js/javascript-lint.js"></script>
-        <script src="utils.js"></script>
-    </head>
-    <body>
+<head>
+    <link rel="stylesheet" href="lib/codemirror/css/codemirror.css">
+    <link rel="stylesheet" href="lib/codemirror/css/lint.css">
+    <link rel="stylesheet" href="lib/codemirror/css/darcula.css">
+    <link rel="stylesheet" href="main.css">
 
+    <script src="lib/codemirror/js/codemirror.js"></script>
+    <script src="lib/codemirror/js/jshint.js"></script>
+    <script src="lib/codemirror/js/lint.js"></script>
+    <script src="lib/codemirror/js/javascript.js"></script>
+    <script src="lib/codemirror/js/javascript-lint.js"></script>
+    <script src="utils.js"></script>
+</head>
+
+<body>
     <div class="slider">
-
         <div class="slide slide--editor">
-
             <div class="header">
                 <button id="save" class="btn save">
                     <img class="img img--save" src="assets/save.svg" alt="Save">
@@ -30,7 +29,7 @@
             </div>
             <div class="header--jquery">
                 <label for="requiresJQuery">Add jQuery</label>
-                <input type="checkbox" id="requiresJQuery" name="requiresJQuery" checked="">  
+                <input type="checkbox" id="requiresJQuery" name="requiresJQuery" checked="">
             </div>
 
             <textarea id="code"></textarea>
@@ -47,6 +46,11 @@
                     <img class="img img--close" src="assets/editor.svg" alt="Close">
                 </button>
             </div>
+            <div class="settings">
+                <button id="export" class="btn new settings--export">Export</button>
+                <button id="import" class="btn new settings--import">Import</button>
+                <input id="import-input" type='file' accept=".json" />
+            </div>
             <ul id="script-list" class="script-list" type="none">
             </ul>
         </div>
@@ -54,5 +58,6 @@
 
     <script src="scriptRunner.js"></script>
     <script src="popup.js"></script>
-    </body>
+</body>
+
 </html>

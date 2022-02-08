@@ -10,6 +10,7 @@
   },
   "permissions": [
     "activeTab",
+    "downloads",
     "storage"
   ],
   "content_security_policy":"script-src 'self' https://apis.google.com; object-src 'self'"

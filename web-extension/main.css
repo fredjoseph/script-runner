@@ -12,6 +12,41 @@ body {
     justify-content: space-between;
 }
 
+.settings {
+    display: flex;
+    justify-content: end;
+}
+
+.settings--export {
+  align-items: baseline !important;
+}
+
+.settings--export:before {
+  padding-right: 5px;
+    content:"\1F847"
+}
+
+.settings--export:hover {
+    background: #55B5E5 !important;
+}
+
+.settings--import {
+  align-items: baseline !important;
+}
+
+.settings--import:before {
+  padding-right: 5px;
+    content:"\1F845"
+}
+
+.settings--import:hover {
+    background: #55B5E5 !important;
+}
+
+#import-input {
+  display: none;
+}
+
 .header--jquery {
     display: flex;
     align-items: start;
@@ -106,6 +141,9 @@ body {
 
 .script-list{
     padding: 0 5px;
+    height: 448px;
+    width: 590px;
+    overflow: auto
 }
 .script {
     display: flex;

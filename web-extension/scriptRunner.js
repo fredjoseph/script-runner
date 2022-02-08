@@ -85,13 +85,45 @@ class ScriptRunner {
                 this.executeCode(temp[0].code, temp[0].options);
             }
         })
+
+        this.buttons.export.addEventListener('click', async () => {
+            this.storage.get(['scripts'], function (items) {
+                const result = JSON.stringify(items);
+
+                // Save as file
+                var url = 'data:application/json;base64,' + btoa(result);
+                chrome.downloads.download({
+                    url: url,
+                    filename: 'script-runner.json'
+                });
+            });
+        });
+
+        this.buttons.import.addEventListener('click', async () => {
+            this.inputs.import.click();
+        });
+
+        this.inputs.import.addEventListener('change', async () => {
+            return new Promise((resolve, _reject) => {
+                const fr = new FileReader();
+                fr.onload = _ => resolve(fr.result);
+                fr.readAsText(this.inputs.import.files[0]);
+            }).then(content => {
+                this.inputs.import.value = "";
+                const scripts = JSON.parse(content).scripts;
+                this.storage.set({ scripts }, () => {
+                    this.scripts = scripts.map(s => new Script(s));
+                    this.render();
+                });
+            })
+        });
     }
 
     async init() {
         try {
             return new Promise(((resolve) => {
                 chrome.storage.sync.get(['scripts', 'state'],
-                    (result) => {
+                    result => {
                         this.scripts = result.scripts.map(s => new Script(s))
 
                         if (!result.state.isList) {
